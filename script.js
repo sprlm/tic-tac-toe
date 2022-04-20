@@ -7,18 +7,23 @@ const playerFactory = (name, marker) => {
 const gameBoard = (() => {
   let spaces = Array(9).fill('');
 
-  return { spaces };
+  const placeMarkerAtIndex = (index => {
+    if (spaces[index] === '') {
+      gameBoard.spaces[index] = gameController.currentPlayer.marker;
+      gameController.changeCurrentPlayer();
+      displayController.displayGameBoard();
+    }
+  });
+
+  return { spaces, placeMarkerAtIndex };
 })();
 
 const displayController = (() => {
   const displayGameBoard = () => {
     tableSpaces.forEach((space, i) => {
       space.textContent = gameBoard.spaces[i];
-      if (space.textContent === 'O') {
-        space.classList.add('orange');
-      } else {
-        space.classList.add('blue');
-      }
+
+      (space.textContent === 'O') ? space.classList.add('orange') : space.classList.add('blue');
     });
   };
 
@@ -40,10 +45,6 @@ const gameController = (() => {
 
 tableSpaces.forEach((space) => {
   space.addEventListener('click', (e) => {
-    if (e.target.textContent === '') {
-      gameBoard.spaces[e.target.dataset.index] = gameController.currentPlayer.marker;
-      gameController.changeCurrentPlayer();
-      displayController.displayGameBoard();
-    };
+      gameBoard.placeMarkerAtIndex(e.target.dataset.index);
   });
 });
