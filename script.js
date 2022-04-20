@@ -19,8 +19,11 @@ const displayController = (() => {
   return {displayGameBoard};
 })();
 
-const playerFactory = (name) => {
-  return {name};
+const playerFactory = (name, marker) => {
+  return {name, marker};
 };
+
+const player1 = playerFactory('Player 1', 'O');
+const player2 = playerFactory('Player 2', 'X');
 
 displayController.displayGameBoard();
