@@ -47,7 +47,3 @@ tableSpaces.forEach((space) => {
     };
   });
 });
-
-// e.target.textContent = gameController.currentPlayer.marker;
-// e.target.classList.add(gameController.currentPlayer.color);
-

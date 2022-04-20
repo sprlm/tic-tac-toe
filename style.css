@@ -5,6 +5,7 @@
 
   --bg-color: #0e1013;
   --border-color: #282a2d;
+  --highlight-color: #5f6368;
   --orange: #fdba74;
   --blue: #93c5fd;
 }
@@ -40,6 +41,12 @@ td {
   text-align: center;
   font-size: 96px;
   font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+td:hover {
+  background-color: var(--highlight-color);
 }
 
 tr:first-child td {
