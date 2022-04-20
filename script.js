@@ -1,29 +1,53 @@
-const spaces = document.querySelectorAll('td');
+const tableSpaces = document.querySelectorAll('td');
+
+const playerFactory = (name, marker) => {
+  return { name, marker };
+};
 
 const gameBoard = (() => {
   let spaces = Array(9).fill('');
-  spaces = ['X','O','X','','X','O','','O',''];
 
-  return {spaces};
+  return { spaces };
 })();
 
 const displayController = (() => {
   const displayGameBoard = () => {
-    spaces.forEach((space, i) => {
+    tableSpaces.forEach((space, i) => {
       space.textContent = gameBoard.spaces[i];
-      if (i % 2 === 0) space.classList.toggle('blue');
-      else space.classList.toggle('orange');
+      if (space.textContent === 'O') {
+        space.classList.add('orange');
+      } else {
+        space.classList.add('blue');
+      }
     });
   };
 
-  return {displayGameBoard};
+  return { displayGameBoard };
 })();
 
-const playerFactory = (name, marker) => {
-  return {name, marker};
-};
+const gameController = (() => {
+  let _player1 = playerFactory('Player 1', 'O');
+  let _player2 = playerFactory('Player 2', 'X');
 
-const player1 = playerFactory('Player 1', 'O');
-const player2 = playerFactory('Player 2', 'X');
+  let currentPlayer = _player1;
 
-displayController.displayGameBoard();
+  const changeCurrentPlayer = () => {;
+    gameController.currentPlayer = (gameController.currentPlayer === _player1) ? _player2 : _player1;
+  };
+
+  return { currentPlayer, changeCurrentPlayer };
+})();
+
+tableSpaces.forEach((space) => {
+  space.addEventListener('click', (e) => {
+    if (e.target.textContent === '') {
+      gameBoard.spaces[e.target.dataset.index] = gameController.currentPlayer.marker;
+      gameController.changeCurrentPlayer();
+      displayController.displayGameBoard();
+    };
+  });
+});
+
+// e.target.textContent = gameController.currentPlayer.marker;
+// e.target.classList.add(gameController.currentPlayer.color);
+
