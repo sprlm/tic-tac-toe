@@ -6,6 +6,7 @@
   --bg-color: #0e1013;
   --border-color: #282a2d;
   --highlight-color: #5f6368;
+  --winner-color: #80868b;
   --orange: #fdba74;
   --blue: #93c5fd;
 }
@@ -71,4 +72,8 @@ td:last-child {
 
 .orange {
   color: var(--orange);
+}
+
+.winner {
+  background-color: var(--winner-color) !important;
 }
