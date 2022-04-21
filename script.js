@@ -1,3 +1,8 @@
+const tableSpaces = document.querySelectorAll('td');
+const newGameBtn = document.querySelector('.new-game-btn');
+const player1NameInput = document.querySelector('.player-name.orange');
+const player2NameInput = document.querySelector('.player-name.blue');
+
 const playerFactory = (name, marker) => {
   return { name, marker };
 };
@@ -90,16 +95,25 @@ const displayController = (() => {
     });
   };
 
-  const displayGameOverMessage = () => {
+  const displayGameOver = () => {
     let indexes;
 
     if (indexes = gameBoard.findWinningSpaces()) {
+      let winningMarker = document.querySelector(`td[data-index="${indexes[0]}"]`).textContent;
+
       document.querySelector(`td[data-index="${indexes[0]}"]`).classList.add('winner');
       document.querySelector(`td[data-index="${indexes[1]}"]`).classList.add('winner');
       document.querySelector(`td[data-index="${indexes[2]}"]`).classList.add('winner');
 
+      if (winningMarker === 'O') {
+        player1NameInput.classList.add('name-winner');
+      } else {
+        player2NameInput.classList.add('name-winner');
+      }
+
     } else if (gameBoard.gameIsTied()) {
-      console.log('tie');
+      player1NameInput.classList.add('name-draw');
+      player2NameInput.classList.add('name-draw');
     }
   };
 
@@ -108,9 +122,18 @@ const displayController = (() => {
       space.textContent = '';
       space.className = '';
     });
+
+    player1NameInput.classList.remove('name-winner');
+    player2NameInput.classList.remove('name-winner');
+    player1NameInput.classList.remove('name-draw');
+    player2NameInput.classList.remove('name-draw');
   };
 
-  return { displayGameBoard, displayGameOverMessage, resetDisplay };
+  return { 
+    displayGameBoard, 
+    displayGameOver, 
+    resetDisplay
+  };
 })();
 
 const gameController = (() => {
@@ -138,17 +161,14 @@ const gameController = (() => {
    };
 })();
 
-const tableSpaces = document.querySelectorAll('td');
-const newGameBtn = document.querySelector('.new-game-btn');
-const player1NameInput = document.querySelector('.player-name.orange');
-const player2NameInput = document.querySelector('.player-name.blue');
+
 
 tableSpaces.forEach((space) => {
   space.addEventListener('click', (e) => {
     if (!gameBoard.gameIsOver()) {
       gameBoard.placeMarkerAtIndex(e.target.dataset.index);
       if (gameBoard.gameIsOver()) {
-        displayController.displayGameOverMessage();
+        displayController.displayGameOver();
       }
     }
   });

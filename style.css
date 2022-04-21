@@ -9,6 +9,7 @@
   --winner-color: #80868b;
   --orange: #fdba74;
   --blue: #93c5fd;
+  --red: #fca5a5;
 }
 
 body {
@@ -38,6 +39,7 @@ body {
   font-size: 2em;
   font-weight: bold;
   background-color: transparent;
+  transition: 0.2s;
 }
 
 .player-name.blue {
@@ -112,3 +114,13 @@ td:last-child {
 .new-game-btn:active {
   background-color: var(--highlight-color);
 }
+
+.name-winner {
+  border: 4px solid var(--winner-color);
+  border-radius: 4px;
+}
+
+.name-draw {
+  border: 4px solid var(--red);
+  border-radius: 4px;
+};
