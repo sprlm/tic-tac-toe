@@ -114,26 +114,34 @@ const displayController = (() => {
 })();
 
 const gameController = (() => {
-  let _player1 = playerFactory('Player 1', 'O');
-  let _player2 = playerFactory('Player 2', 'X');
+  let player1 = playerFactory('Player 1', 'O');
+  let player2 = playerFactory('Player 2', 'X');
 
-  let currentPlayer = _player1;
+  let currentPlayer = player1;
 
   const changeCurrentPlayer = () => {
-    gameController.currentPlayer = (gameController.currentPlayer === _player1) ? _player2 : _player1;
+    gameController.currentPlayer = (gameController.currentPlayer === player1) ? player2 : player1;
   };
 
   const resetGame = () => {
     gameBoard.resetBoard();
     displayController.resetDisplay();
-    gameController.currentPlayer = _player1;
+    gameController.currentPlayer = player1;
   };
 
-  return { currentPlayer, changeCurrentPlayer, resetGame };
+  return { 
+    player1,
+    player2,
+    currentPlayer, 
+    changeCurrentPlayer, 
+    resetGame
+   };
 })();
 
 const tableSpaces = document.querySelectorAll('td');
 const newGameBtn = document.querySelector('.new-game-btn');
+const player1NameInput = document.querySelector('.player-name.orange');
+const player2NameInput = document.querySelector('.player-name.blue');
 
 tableSpaces.forEach((space) => {
   space.addEventListener('click', (e) => {
@@ -147,3 +155,11 @@ tableSpaces.forEach((space) => {
 });
 
 newGameBtn.addEventListener('click', gameController.resetGame);
+
+player1NameInput.addEventListener('blur', (e) => {
+  gameController.player1.name = e.target.value;
+});
+
+player2NameInput.addEventListener('blur', (e) => {
+  gameController.player2.name = e.target.value;
+});
