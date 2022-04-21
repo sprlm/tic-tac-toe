@@ -77,3 +77,26 @@ td:last-child {
 .winner {
   background-color: var(--winner-color) !important;
 }
+
+.new-game-btn {
+  height: 56px;
+  width: 256px;
+  border: 0;
+  border-radius: 64px;
+  margin-top: 32px;
+  font-family: 'Exo', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  background-color: var(--border-color);
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.new-game-btn:hover {
+  filter: brightness(140%);
+}
+
+.new-game-btn:active {
+  background-color: var(--highlight-color);
+}

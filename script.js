@@ -1,5 +1,3 @@
-const tableSpaces = document.querySelectorAll('td');
-
 const playerFactory = (name, marker) => {
   return { name, marker };
 };
@@ -69,7 +67,18 @@ const gameBoard = (() => {
     }
   });
 
-  return { spaces, findWinningSpaces, gameIsTied, gameIsOver, placeMarkerAtIndex };
+  const resetBoard = () => {
+    gameBoard.spaces.fill('');
+  }
+
+  return { 
+    spaces, 
+    findWinningSpaces, 
+    gameIsTied, 
+    gameIsOver, 
+    placeMarkerAtIndex, 
+    resetBoard
+  };
 })();
 
 const displayController = (() => {
@@ -94,7 +103,14 @@ const displayController = (() => {
     }
   };
 
-  return { displayGameBoard, displayGameOverMessage };
+  const resetDisplay = () => {
+    tableSpaces.forEach((space) => {
+      space.textContent = '';
+      space.className = '';
+    });
+  };
+
+  return { displayGameBoard, displayGameOverMessage, resetDisplay };
 })();
 
 const gameController = (() => {
@@ -103,12 +119,21 @@ const gameController = (() => {
 
   let currentPlayer = _player1;
 
-  const changeCurrentPlayer = () => {;
+  const changeCurrentPlayer = () => {
     gameController.currentPlayer = (gameController.currentPlayer === _player1) ? _player2 : _player1;
   };
 
-  return { currentPlayer, changeCurrentPlayer };
+  const resetGame = () => {
+    gameBoard.resetBoard();
+    displayController.resetDisplay();
+    gameController.currentPlayer = _player1;
+  };
+
+  return { currentPlayer, changeCurrentPlayer, resetGame };
 })();
+
+const tableSpaces = document.querySelectorAll('td');
+const newGameBtn = document.querySelector('.new-game-btn');
 
 tableSpaces.forEach((space) => {
   space.addEventListener('click', (e) => {
@@ -120,3 +145,5 @@ tableSpaces.forEach((space) => {
     }
   });
 });
+
+newGameBtn.addEventListener('click', gameController.resetGame);
